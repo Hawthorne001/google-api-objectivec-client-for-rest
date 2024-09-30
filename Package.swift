@@ -5,10 +5,10 @@ import PackageDescription
 let package = Package(
     name: "GoogleAPIClientForREST",
     platforms: [
-        .iOS(.v10),
-        .macOS(.v10_12),
-        .tvOS(.v10),
-        .watchOS(.v6)
+        .iOS(.v12),
+        .macOS(.v10_15),
+        .tvOS(.v13),
+        .watchOS(.v7)
     ],
     products: [
         // The main library, only thing you need to use your own services.
@@ -850,6 +850,10 @@ let package = Package(
             targets: ["GoogleAPIClientForREST_OnDemandScanning"]
         ),
         .library(
+            name: "GoogleAPIClientForREST_OracleDatabase",
+            targets: ["GoogleAPIClientForREST_OracleDatabase"]
+        ),
+        .library(
             name: "GoogleAPIClientForREST_OrgPolicyAPI",
             targets: ["GoogleAPIClientForREST_OrgPolicyAPI"]
         ),
@@ -1172,7 +1176,7 @@ let package = Package(
         // End of products.
     ],
     dependencies: [
-        .package(url: "https://github.com/google/gtm-session-fetcher.git", "1.6.1" ..< "4.0.0"),
+        .package(url: "https://github.com/google/gtm-session-fetcher.git", "1.6.1" ..< "5.0.0"),
     ],
     targets: [
         .target(
@@ -2449,6 +2453,12 @@ let package = Package(
             name: "GoogleAPIClientForREST_OnDemandScanning",
             dependencies: ["GoogleAPIClientForRESTCore"],
             path: "Sources/GeneratedServices/OnDemandScanning",
+            publicHeadersPath: "Public"
+        ),
+        .target(
+            name: "GoogleAPIClientForREST_OracleDatabase",
+            dependencies: ["GoogleAPIClientForRESTCore"],
+            path: "Sources/GeneratedServices/OracleDatabase",
             publicHeadersPath: "Public"
         ),
         .target(

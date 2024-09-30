@@ -30,9 +30,6 @@ jobs:
       matrix:
         CONFIGURATION: ["debug", "release"]
     steps:
-    # The "macos-14" image defaults to 15.0.1, select the newer Xcode.
-    - name: Xcode version
-      run: sudo xcode-select -switch /Applications/Xcode_15.2.app
     - uses: actions/checkout@v4
     - name: Build and Test Library
       run:  |
@@ -47,12 +44,10 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        PLATFORM: ["ios", "macos", "tvos", "watchos", "visionos"]
+        # GitHub runners dropped visionOS. https://github.com/actions/runner-images/issues/10559
+        PLATFORM: ["ios", "macos", "tvos", "watchos"]
         CONFIGURATION: ["Debug", "Release"]
     steps:
-    # The "macos-14" image defaults to 15.0.1, select the newer Xcode.
-    - name: Xcode version
-      run: sudo xcode-select -switch /Applications/Xcode_15.2.app
     - uses: actions/checkout@v4
     - name: Build and Test Library
       run:  |
@@ -75,10 +70,8 @@ jobs:
             ;;
         esac
 
-        set -o pipefail
         xcodebuild \
             -scheme GoogleAPIClientForREST-Package \
             -configuration ${{ matrix.CONFIGURATION }} \
             -destination "${DESTINATION}" \
-            build test \
-          | xcpretty
+            build test
